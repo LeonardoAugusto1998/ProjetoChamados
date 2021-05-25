@@ -58,7 +58,7 @@
 .login h1{
     padding-bottom: 50px;
     font-size: 70px;
-    color: rgb(68, 92, 226);
+    color: white;
 }
 
 .login form button{
@@ -67,17 +67,17 @@
     height: 7%;
     align-items: center;
     justify-content: center;
-    border: 3px solid rgb(68, 92, 226);
+    border: 3px solid rgb(30, 158, 190);
     border-radius: 6px;
     margin-bottom: 20px;
     margin-top: 20px;
-    color: rgb(68, 92, 226);
+    color: rgb(30, 158, 190);
     font-weight: 700;
     transition: ease-in 0.2s;
 }
 
 .login form button:hover{
-    background-color: rgb(68, 92, 226);
+    background-color: rgb(30, 158, 190);
     color: white;
 }
 
@@ -88,5 +88,5 @@
 }
 
 .login form a:hover{
-    color: rgb(4, 0, 245);
+    color: black;
 }
