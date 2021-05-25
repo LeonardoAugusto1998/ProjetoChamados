@@ -1,4 +1,5 @@
-import { Route, Switch } from 'react-router-dom';
+import { Switch } from 'react-router-dom';
+import Route from '../routes/Route';
 
 import Login from '../pages/Login';
 import Cadastro from '../pages/Cadastro';
@@ -9,7 +10,7 @@ export default function Routes(){
         <Switch>
             <Route exact path='/' component={Login}/>
             <Route exact path='/cadastro' component={Cadastro}/>
-            <Route exact path='/dashboard' component={Dashboard} isPrivate/>
+            <Route exact path='/dashboard' component={Dashboard} Block />
         </Switch>
     );
 }

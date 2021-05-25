@@ -2,28 +2,26 @@ import { Route, Redirect } from 'react-router-dom';
 
 export default function RouteWrapper({
     component: Component,
-    isPrivate,
+    Block,
     ...rest
 }){
 
-    const signed = true;
+    const signed = false;
 
-    if(!signed && isPrivate){
+    if(!signed && Block){
         return <Redirect to='/'/>
     }
 
-    if(signed && !isPrivate){
+    if(signed && !Block){
         return <Redirect to='/dashboard'/>
     }
 
     return(
-        
         <Route
-        {...rest}
-        render={ props => (
-            <Component {...props}/>
-        )}
+            {...rest}
+            render={ props => (
+                <Component {...props}/>
+            )}
         />
-       
-    )
+    );
 }
