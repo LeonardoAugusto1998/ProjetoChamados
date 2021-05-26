@@ -11,7 +11,7 @@ export default function AuthProvider({children}){
             const userDadosStorage = localStorage.getItem('Users');
 
             if(userDadosStorage){
-                setUser(userDadosStorage);
+                setUser(JSON.parse(userDadosStorage));
             }
         }
         Loadstorage();
