@@ -1,3 +1,6 @@
+
+import { useContext } from 'react';
+import { AuthContext } from '../contexts/auth';
 import { Route, Redirect } from 'react-router-dom';
 
 export default function RouteWrapper({
@@ -6,7 +9,7 @@ export default function RouteWrapper({
     ...rest
 }){
 
-    const signed = false;
+    const {signed} = useContext(AuthContext);
 
     if(!signed && Block){
         return <Redirect to='/'/>
