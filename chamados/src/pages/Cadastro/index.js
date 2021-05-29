@@ -1,4 +1,6 @@
-import { useState } from 'react';
+
+import { AuthContext } from '../../contexts/auth'
+import { useState, useContext } from 'react';
 import { Link } from 'react-router-dom';
 import logo from '../../assets/logo.png';
 
@@ -7,8 +9,11 @@ export default function Login(){
     const [senha, setSenha] = useState('');
     const [nome, setNome] = useState('');
 
-    function cadastrar(e){
+    const { cadastrar } = useContext(AuthContext)
+
+    function cadastrarFunc(e){
         e.preventDefault();
+        cadastrar(email, senha, nome);
     }
 
     return(
@@ -18,10 +23,10 @@ export default function Login(){
                     <img src={logo} alt='logo'/>
                 </div>
 
-                <form onSubmit={cadastrar}>
+                <form onSubmit={cadastrarFunc}>
                     <h1>Criar Conta</h1>
                     <label>Nome</label>
-                    <input type='text' value={nome} placeholder='exemplo@exemplo.com' onChange={(e)=>{setNome(e.target.value)}}/>
+                    <input type='text' value={nome} placeholder='Digite seu nome' onChange={(e)=>{setNome(e.target.value)}}/>
                     <label>Login</label>
                     <input type='email' value={email} placeholder='exemplo@exemplo.com' onChange={(e)=>{setEmail(e.target.value)}}/>
                     <label>Senha</label>
