@@ -1,5 +1,5 @@
 
-import { AuthContext } from '../../contexts/auth'
+import  { AuthContext }  from '../../contexts/auth'
 import { useState, useContext } from 'react';
 import { Link } from 'react-router-dom';
 import logo from '../../assets/logo.png';
@@ -9,7 +9,7 @@ export default function Login(){
     const [senha, setSenha] = useState('');
     const [nome, setNome] = useState('');
 
-    const { cadastrar } = useContext(AuthContext)
+    const { cadastrar, loading, setLoading } = useContext( AuthContext )
 
     function cadastrarFunc(e){
         e.preventDefault();

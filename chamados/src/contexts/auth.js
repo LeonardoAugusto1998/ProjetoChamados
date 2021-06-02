@@ -5,6 +5,7 @@ export const AuthContext = createContext({})
 
 export default function AuthProvider({children}){
     const [user, setUser] = useState(null);
+    const [loading, setLoading] = useState(true)
 
     useEffect(()=>{
 
@@ -19,19 +20,22 @@ export default function AuthProvider({children}){
     }, [])
 
     async function cadastrar(email, senha, nome){
+
+
         await firebase.auth().createUserWithEmailAndPassword(email, senha)
-        .then( async(value) =>{
-            let uid = value.uid;
+        .then( async (value) =>{
+            let uid = value.user.uid;
+
             await firebase.firestore().collection('Users')
-            .doc(uid).set({
+            .doc(value.user.uid).set({
                 nome: nome,
                 avatarUrl: null,
             })
             .then( () =>{
                 let data = {
-                    uid: value.uid,
+                    uid: value.user.uid,
                     nome: nome,
-                    email: value.email,
+                    email: value.user.email,
                     avatarUrl: null
                 }
                 setUser(data);
@@ -41,23 +45,11 @@ export default function AuthProvider({children}){
     }
 
     function salvarLocalStorage(data){
-        localStorage.setItem('Users', data)
-    }
-
-    function deletarLocalStorage(){
-        localStorage.removeItem('Users')
-    }
-
-     async function deslogar(){
-        await firebase.auth().signOut()
-        .then( () => {
-            setUser(null);
-
-        })
+        localStorage.setItem('Users', JSON.stringify(data));
     }
 
     return(
-        <AuthContext.Provider value={{signed: !!user, user, setUser, cadastrar, deslogar}}>
+        <AuthContext.Provider value={{signed: !!user, user, setUser, cadastrar, loading, setLoading}}>
             {children}
         </AuthContext.Provider>
     )

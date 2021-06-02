@@ -9,7 +9,7 @@ export default function RouteWrapper({
     ...rest
 }){
 
-    const {signed} = useContext(AuthContext);
+    const { signed } = useContext(AuthContext);
 
     if(!signed && Block){
         return <Redirect to='/'/>
