@@ -4,7 +4,7 @@ import 'firebase/firestore';
 import 'firebase/storage';
 
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
-let firebaseConfig = {
+const firebaseConfig = {
     apiKey: "AIzaSyCv3jvSciyYzV428T1TKgJVPpgU2AMuwsw",
     authDomain: "chamados-e6313.firebaseapp.com",
     projectId: "chamados-e6313",
