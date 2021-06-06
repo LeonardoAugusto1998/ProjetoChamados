@@ -1,17 +1,21 @@
 
+import { AuthContext } from '../../contexts/auth';
 import './login.css'
-import { useState } from 'react';
+import { useState, useContext } from 'react';
 import { Link } from 'react-router-dom';
 import logo from '../../assets/logo.png';
 
 export default function Login(){
     const [email, setEmail] = useState('');
     const [senha, setSenha] = useState('');
+
+    const { login, loading, setLoading } = useContext(AuthContext)
     
 
     function acessar(e){
         e.preventDefault();
-        
+        login(email, senha);
+        setLoading(true);
     }
 
     return(
@@ -27,7 +31,7 @@ export default function Login(){
                     <input type='email' value={email} placeholder='exemplo@exemplo.com' onChange={(e)=>{setEmail(e.target.value)}}/>
                     <label>Senha</label>
                     <input type='password' value={senha} placeholder='********' onChange={(e)=>{setSenha(e.target.value)}}/>
-                    <button type='submit'>Acessar</button>
+                    <button type='submit'>{ loading ? 'Carregando...' : 'Acessar'}</button>
                     <Link to='/cadastro'>Criar uma Conta</Link>
                 </form>
             </div>

@@ -5,6 +5,7 @@ export const AuthContext = createContext({})
 
 export default function AuthProvider({children}){
     const [user, setUser] = useState(null);
+    const [loading, setLoading] = useState(false);
     
    
    
@@ -21,6 +22,40 @@ export default function AuthProvider({children}){
 
     loadStorageUser();
 }, []);
+
+        async function login(email, senha){
+
+            await firebase.auth().signInWithEmailAndPassword(email, senha)
+            .then( async (value)=>{
+
+                await firebase.firestore().collection('Users')
+                .doc(value.user.uid).get()
+                .then((snap)=>{
+                    let data = {
+                        uid: value.user.uid,
+                        nome: snap.data().nome,
+                        email: value.user.email,
+                        avatarUrl: snap.data().avatarUrl,
+                    }
+
+                    setUser(data);
+                    salvarUsuario(data);
+                    setLoading(false);
+                    
+
+                })
+                .catch((err)=>{
+                    console.log(err);
+                    setLoading(false);
+                })
+                
+            })
+            .catch((err)=>{
+                console.log(err);
+                setLoading(false);
+            })
+
+        }
 
         async function cadastrar(email, senha, nome){
 
@@ -44,11 +79,20 @@ export default function AuthProvider({children}){
 
                     setUser(data);
                     salvarUsuario(data);
+                    setLoading(false);
+                    
 
+                })
+                .catch((err)=>{
+                    console.log('Erro no Firestore' + err);
+                    setLoading(false);
                 })
 
             })
-            .catch((err)=>{console.log(err)})
+            .catch((err)=>{
+                console.log('Erro no Auth' + err);
+                setLoading(false);
+            })
 
         }
 
@@ -66,7 +110,7 @@ export default function AuthProvider({children}){
 
         
     return(
-        <AuthContext.Provider value={{signed: !!user, setUser, cadastrar, deslogar }}>
+        <AuthContext.Provider value={{signed: !!user, setUser, cadastrar, deslogar, login, loading, setLoading }}>
             {children}
         </AuthContext.Provider>
     )

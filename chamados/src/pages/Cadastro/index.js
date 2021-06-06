@@ -9,7 +9,7 @@ export default function Login(){
     const [senha, setSenha] = useState('');
     const [nome, setNome] = useState('');
 
-    const { cadastrar } = useContext(AuthContext);
+    const { cadastrar, loading } = useContext(AuthContext);
 
      function cadastrarFunc(e){
         e.preventDefault();
@@ -34,7 +34,7 @@ export default function Login(){
                     <input type='email' value={email} placeholder='exemplo@exemplo.com' onChange={(e)=>{setEmail(e.target.value)}}/>
                     <label>Senha</label>
                     <input type='password' value={senha} placeholder='********' onChange={(e)=>{setSenha(e.target.value)}}/>
-                    <button type='submit'>Cadastrar</button>
+                    <button type='submit'>{loading ? 'Carregando...' : 'Cadastrar'}</button>
                     <Link to='/'>Ja tem Conta? Entrar</Link>
                 </form>
             </div>
