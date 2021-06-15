@@ -1,3 +1,5 @@
+
+import { toast } from 'react-toastify'
 import { useState, createContext, useEffect } from 'react';
 import firebase from '../services/firebaseConnection';
 
@@ -41,18 +43,21 @@ export default function AuthProvider({children}){
                     setUser(data);
                     salvarUsuario(data);
                     setLoading(false);
+                    toast.success('Seja Bem Vindo de Volta !')
                     
 
                 })
                 .catch((err)=>{
                     console.log(err);
                     setLoading(false);
+                    toast.error('Ops, Parece que algo deu errado !')
                 })
                 
             })
             .catch((err)=>{
                 console.log(err);
                 setLoading(false);
+                toast.error('Ops, Parece que algo deu errado !')
             })
 
         }
@@ -80,18 +85,21 @@ export default function AuthProvider({children}){
                     setUser(data);
                     salvarUsuario(data);
                     setLoading(false);
+                    toast.success('Seja bem Vindo à nossa plataforma')
                     
 
                 })
                 .catch((err)=>{
                     console.log('Erro no Firestore' + err);
                     setLoading(false);
+                    toast.error('Ops, Parece que algo deu errado !')
                 })
 
             })
             .catch((err)=>{
                 console.log('Erro no Auth' + err);
                 setLoading(false);
+                toast.error('Ops, Parece que algo deu errado !')
             })
 
         }
