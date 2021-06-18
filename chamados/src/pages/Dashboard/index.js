@@ -1,4 +1,5 @@
 
+import Header from '../../components/Header'
 import { AuthContext } from '../../contexts/auth';
 import { useContext } from 'react';
 
@@ -14,8 +15,9 @@ export default function Dashboard(){
 
     return(
         <div>
-            <h1>Página de Dashboard</h1>
-            <button onClick={deslogarFunc}>Deslogar</button>
+                <Header/>
+                <h1>Página de Dashboard</h1>
+            <button onClick={deslogarFunc}>Deslogar</button>            
         </div>
     )
     
