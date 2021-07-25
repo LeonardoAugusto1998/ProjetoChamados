@@ -27,7 +27,7 @@ export default function Login(){
                 </div>
 
                 <form onSubmit={cadastrarFunc}>
-                    <h1>Criar Conta</h1>
+                    <h1>Cadastro</h1>
                     <label>Nome</label>
                     <input type='text' value={nome} placeholder='Digite seu nome' onChange={(e)=>{setNome(e.target.value)}}/>
                     <label>Login</label>

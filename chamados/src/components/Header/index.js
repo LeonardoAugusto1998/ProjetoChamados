@@ -17,9 +17,9 @@ const { user } = useContext(AuthContext);
                 <img src={user.avatarUrl === null ? avatar : user.avatarUrl} alt='foto de perfil'/>
             </div>
             
-            <Link to='/dashboard'>Clientes <FiHome size={24}/></Link> 
-            <Link to='/dashboard'>Chamados <FiSettings size={24}/></Link>
-            <Link to='/dashboard'>Meu Perfil <FiUser size={24}/></Link>
+            <Link to='/dashboard'> <FiHome size={24}/>Clientes</Link> 
+            <Link to='/dashboard'> <FiSettings size={24}/>Chamados</Link>
+            <Link to='/perfil'><FiUser size={24}/>Meu Perfil</Link>
             
         </div>
     );

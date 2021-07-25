@@ -2,22 +2,21 @@
 import Header from '../../components/Header'
 import { AuthContext } from '../../contexts/auth';
 import { useContext } from 'react';
+import Title from '../../components/Title';
+import { FiHome } from 'react-icons/fi';
 
 export default function Dashboard(){
-
-    const { deslogar } = useContext(AuthContext);
-
-       function deslogarFunc(){
-        localStorage.removeItem('Users');
-        deslogar();
-        }
-
 
     return(
         <div>
                 <Header/>
-                <h1>Página de Dashboard</h1>
-            <button onClick={deslogarFunc}>Deslogar</button>            
+                <div className='content'>
+                    <Title name='Dashboard'>
+                        <FiHome size={25}/>
+                    </Title>
+                    
+                </div>
+                            
         </div>
     )
     
