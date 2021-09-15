@@ -1,6 +1,6 @@
 
 import './title.css';
-import { FiUser } from 'react-icons/fi';
+
 
 
 export default function Title({children, name}){

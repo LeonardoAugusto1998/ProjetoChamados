@@ -105,10 +105,9 @@
     background-color: rgba(0, 0, 0, 0);
 }
 .login img{
-    width: 110px;
+    width: 140px;
     height: 80px;
     margin-left: 0px;
-    background-color: rgba(0, 0, 0, 0.233);
 }
 .login form{
     display: flex;

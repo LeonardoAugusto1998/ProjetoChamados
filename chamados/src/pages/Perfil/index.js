@@ -1,6 +1,6 @@
 
 import './perfil.css'
-import {useContext, useState} from 'react';
+import {useContext, useEffect, useState} from 'react';
 import { FiUser, FiUpload } from 'react-icons/fi';
 import Header from '../../components/Header';
 import Title from '../../components/Title';
@@ -19,6 +19,41 @@ const [avatarUrl, setAvatarUrl] = useState(user && user.avatarUrl)
 const [nome, setNome] = useState(user && user.nome);
 const [email, setEmail] = useState(user && user.email);
 const [imageAvatar, setImageAvatar] = useState(null);
+const [dados, setDados] = useState({})
+
+
+async function pegarDados(){
+    await firebase.firestore().collection('Users').doc(user.uid)
+    .get()
+    .then( (snap) => {
+        let lista = []
+
+        snap.forEach((doc) => {
+          lista.push({
+              uid: doc.data().uid
+          });
+
+        });
+        setDados(lista)
+    })
+    .catch( async ()=>{
+        const usuario = localStorage.getItem('Users');
+
+        await firebase.firestore().collection('Users')
+        .doc(user.uid)
+        .set({
+            nome: JSON.parse(usuario).nome,
+            avatarUrl: JSON.parse(usuario).avatarUrl,
+        })
+        .then(()=>{})
+    })
+    
+
+}
+
+    useEffect(()=>{
+        pegarDados()
+    },[])
 
 
     function handleChange(e){

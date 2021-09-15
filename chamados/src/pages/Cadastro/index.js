@@ -3,20 +3,73 @@ import  { AuthContext }  from '../../contexts/auth';
 import { useState, useContext } from 'react';
 import { Link } from 'react-router-dom';
 import logo from '../../assets/logo.png';
+import firebase from '../../services/firebaseConnection';
+import { toast } from 'react-toastify'
 
 export default function Login(){
     const [email, setEmail] = useState('');
     const [senha, setSenha] = useState('');
     const [nome, setNome] = useState('');
 
-    const { cadastrar, loading } = useContext(AuthContext);
+    const { salvarUsuario, setUser, loading, setLoading } = useContext(AuthContext);
 
-     function cadastrarFunc(e){
+    async function cadastrarFunc(e){
         e.preventDefault();
-        cadastrar(email, senha, nome);
-        setEmail('');
-        setSenha('');
-        setNome('');
+        
+            await firebase.auth().createUserWithEmailAndPassword(email, senha)
+            .then( async (value)=>{
+
+                let data = {
+                    uid: value.user.uid,
+                    nome: nome,
+                    email: value.user.email,
+                    avatarUrl: null,
+                }
+
+                setUser(data);
+                salvarUsuario(data);
+                setLoading(false);
+                toast.success('Seja bem Vindo à nossa plataforma');
+                setEmail('');
+                setSenha('');
+                setNome('');
+
+                await firebase.firestore().collection('Users')
+                .doc(value.user.uid)
+                .set({
+                    nome: nome,
+                    avatarUrl: null,
+                })
+                .then(()=>{
+
+                    let data = {
+                        uid: value.user.uid,
+                        nome: nome,
+                        email: value.user.email,
+                        avatarUrl: null,
+                    }
+
+                    setUser(data);
+                    salvarUsuario(data);
+                    setLoading(false);
+                    setEmail('');
+                    setSenha('');
+                    setNome('');
+                    
+
+                })
+                .catch((err)=>{
+                    console.log('Erro no Firestore' + err);
+                    setLoading(false);
+                    toast.error('Ops, Parece que algo deu errado !')
+                })
+
+            })
+            .catch((err)=>{
+                console.log('Erro no Auth' + err);
+                setLoading(false);
+                toast.error('Ops, Parece que algo deu errado !')
+        })
     }
 
     return(

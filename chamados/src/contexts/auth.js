@@ -60,51 +60,7 @@ export default function AuthProvider({children}){
                 toast.error('Ops, Parece que algo deu errado !')
             })
 
-        }
-
-        async function cadastrar(email, senha, nome){
-
-            await firebase.auth().createUserWithEmailAndPassword(email, senha)
-            .then( async (value)=>{
-
-                await firebase.firestore().collection('Users')
-                .doc(value.user.uid)
-                .set({
-                    nome: nome,
-                    avatarUrl: null,
-                })
-                .then(()=>{
-
-                    let data = {
-                        uid: value.user.uid,
-                        nome: nome,
-                        email: value.user.email,
-                        avatarUrl: null,
-                    }
-
-                    setUser(data);
-                    salvarUsuario(data);
-                    setLoading(false);
-                    toast.success('Seja bem Vindo à nossa plataforma')
-                    
-
-                })
-                .catch((err)=>{
-                    console.log('Erro no Firestore' + err);
-                    setLoading(false);
-                    toast.error('Ops, Parece que algo deu errado !')
-                })
-
-            })
-            .catch((err)=>{
-                console.log('Erro no Auth' + err);
-                setLoading(false);
-                toast.error('Ops, Parece que algo deu errado !')
-            })
-
-        }
-
-            
+        } 
 
         function salvarUsuario(data){
             localStorage.setItem('Users', JSON.stringify(data));
@@ -118,7 +74,16 @@ export default function AuthProvider({children}){
 
         
     return(
-        <AuthContext.Provider value={{signed: !!user, user,  setUser, cadastrar, deslogar, login, loading, setLoading, salvarUsuario }}>
+        <AuthContext.Provider value={{
+            signed: !!user, 
+            user, 
+            setUser, 
+            deslogar, 
+            login, 
+            loading, 
+            setLoading, 
+            salvarUsuario 
+            }}>
             {children}
         </AuthContext.Provider>
     )
